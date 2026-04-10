@@ -49,8 +49,8 @@ This is a complete port of the **WorldMonitor Desktop Companion** to the ESP32 C
    #define TFT_BL   21
    #define TOUCH_CS 33
    ```
-5. **Open `WorldMonitor_CYD.ino`**, select **ESP32 Dev Module**, upload.
-6. **Set WiFi** via Serial Monitor or edit `config.h`.
+5. **Open the `src` folder** in Arduino IDE (File → Open → navigate to `WorldMonitor_CYD/src/WorldMonitor_CYD.ino`), select **ESP32 Dev Module**, upload.
+6. **Set WiFi** via Serial Monitor or edit `src/config.h`.
 
 ## 🛠️ Building with PlatformIO
 
@@ -64,8 +64,6 @@ If you prefer PlatformIO (VS Code):
 
 PlatformIO will automatically download TFT_eSPI and ArduinoJson. You still need to edit the TFT_eSPI `User_Setup.h` as described above.
 
-**Note**: The project uses `src_dir = .` in `platformio.ini` (source files are in the root folder, not a `src/` subdirectory). This is intentional.
-
 ### Continuous Integration (CI)
 
 This repository includes a GitHub Actions workflow (`.github/workflows/build.yml`) that automatically compiles the sketch on every push to verify it builds without errors. You can view the **Actions** tab on GitHub to see build status.
@@ -74,11 +72,11 @@ This repository includes a GitHub Actions workflow (`.github/workflows/build.yml
 
 ### WiFi
 - Default credentials: `YourWiFi` / `YourPassword`.
-- Change in `config.h` or via SD card.
+- Change in `src/config.h` or via SD card.
 - Credentials saved to ESP32 NVS flash.
 
 ### SD Card (Optional)
-- Insert SD card with `wmconfig.json`:
+- Insert SD card with `wmconfig.json` (see `example-wmconfig.json` in the repository):
    ```json
    {
      "wifi_ssid": "YourWiFi",
@@ -109,25 +107,27 @@ If no touch for `auto_advance_seconds` (default 30):
 - **Settings screen skipped** – only data screens rotate.
 - **UI returns** on any touch.
 
-Adjust in `config.h`:
+Adjust in `src/config.h`:
 ```cpp
 cfg.autoAdvanceSeconds = 30; // 0 = disable
 ```
 
 ## 🐛 Touch Debug
 
-Uncomment `#define TOUCH_DEBUG` in `WorldMonitor_CYD.ino` to print raw touch coordinates to Serial Monitor.
+Uncomment `#define TOUCH_DEBUG` in `src/WorldMonitor_CYD.ino` to print raw touch coordinates to Serial Monitor.
 
 ## 📁 Files
 
+All source files are located in the `src/` folder:
+
 | File | Purpose |
 |------|---------|
-| `WorldMonitor_CYD.ino` | Main sketch (touch, WiFi, config, refresh) |
-| `config.h` | Data structures, NVS/SD config functions |
-| `ui.h` | TFT_eSPI drawing primitives, colors |
-| `screens.h` | All screen‑drawing functions (Simple + Classic) |
-| `api.h` | HTTP clients for Yahoo Finance, USGS, NASA |
-| `mockdata.h` | Mock risk/news/forecasts data |
+| `src/WorldMonitor_CYD.ino` | Main sketch (touch, WiFi, config, refresh) |
+| `src/config.h` | Data structures, NVS/SD config functions |
+| `src/ui.h` | TFT_eSPI drawing primitives, colors |
+| `src/screens.h` | All screen‑drawing functions (Simple + Classic) |
+| `src/api.h` | HTTP clients for Yahoo Finance, USGS, NASA |
+| `src/mockdata.h` | Mock risk/news/forecasts data |
 
 ## 🔧 Troubleshooting
 
@@ -135,7 +135,7 @@ Uncomment `#define TOUCH_DEBUG` in `WorldMonitor_CYD.ino` to print raw touch coo
 |-------|------------|
 | Touch not working | Check `TOUCH_CS = 33` in TFT_eSPI config, calibrate `calData` |
 | Colors inverted | CYD needs `tft.invertDisplay(true)` (already set) |
-| WiFi fails | Check power, SSID/password in `config.h` |
+| WiFi fails | Check power, SSID/password in `src/config.h` |
 | Live data stale | WiFi must be connected, min 60‑second refresh |
 
 ## 🙏 Credits

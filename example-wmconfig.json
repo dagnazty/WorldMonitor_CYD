@@ -1,0 +1,10 @@
+{
+  "wifi_ssid": "YourWiFi",
+  "wifi_password": "YourPassword",
+  "ui_mode": "simple",
+  "refresh_seconds": 60,
+  "buzzer": false,
+  "brightness": 200,
+  "screen_timeout": 0,
+  "auto_advance_seconds": 30
+}
