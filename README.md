@@ -1,6 +1,6 @@
 # 🌍 WorldMonitor CYD Edition
 
-![PlatformIO CI](https://github.com/your-username/WorldMonitor_CYD/actions/workflows/build.yml/badge.svg)
+![PlatformIO CI](https://github.com/dagnazty/WorldMonitor_CYD/actions/workflows/build.yml/badge.svg)
 
 **A touch‑screen global dashboard on a $15 ESP32 display.**
 
@@ -178,6 +178,6 @@ All necessary GitHub files (`.gitignore`, `.gitattributes`, `LICENSE`) are alrea
 
 After pushing, update the badge URL in `README.md`:
 ```markdown
-![PlatformIO CI](https://github.com/your-username/your-repo/actions/workflows/build.yml/badge.svg)
+![PlatformIO CI](https://github.com/dagnazty/WorldMonitor_CYD/actions/workflows/build.yml/badge.svg)
 ```
 Replace `your-username/your-repo` with your actual GitHub repository path.
