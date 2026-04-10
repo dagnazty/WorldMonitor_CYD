@@ -1,0 +1,82 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Build firmware
+        run: pio run -e esp32dev
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release-assets
+          # Copy the main firmware files
+          cp .pio/build/esp32dev/firmware.bin release-assets/WorldMonitor_CYD-firmware.bin 2>/dev/null || true
+          cp .pio/build/esp32dev/partitions.bin release-assets/WorldMonitor_CYD-partitions.bin 2>/dev/null || true
+          cp .pio/build/esp32dev/bootloader.bin release-assets/WorldMonitor_CYD-bootloader.bin 2>/dev/null || true
+          # Copy the .elf for debugging
+          cp .pio/build/esp32dev/firmware.elf release-assets/WorldMonitor_CYD.elf 2>/dev/null || true
+          # Create a simple README for the release
+          cat > release-assets/README.md << 'EOF'
+          # WorldMonitor CYD Firmware ${GITHUB_REF_NAME}
+          
+          ## Files
+          - `WorldMonitor_CYD-firmware.bin` – Main firmware binary
+          - `WorldMonitor_CYD-partitions.bin` – Partition table
+          - `WorldMonitor_CYD-bootloader.bin` – Bootloader
+          - `WorldMonitor_CYD.elf` – Debug symbols (optional)
+          
+          ## Flashing Instructions
+          
+          ### Using esptool.py
+          ```
+          esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 \
+            write_flash 0x1000 WorldMonitor_CYD-bootloader.bin \
+            0x8000 WorldMonitor_CYD-partitions.bin \
+            0x10000 WorldMonitor_CYD-firmware.bin
+          ```
+          
+          ### Using PlatformIO
+          ```
+          pio run -e esp32dev -t upload
+          ```
+          
+          See the main repository README for hardware setup and configuration.
+          EOF
+          
+          echo "Release assets prepared:"
+          ls -lh release-assets/
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            release-assets/WorldMonitor_CYD-firmware.bin
+            release-assets/WorldMonitor_CYD-partitions.bin
+            release-assets/WorldMonitor_CYD-bootloader.bin
+            release-assets/WorldMonitor_CYD.elf
+            release-assets/README.md

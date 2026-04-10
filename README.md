@@ -70,8 +70,10 @@ If you’re using Arduino IDE, you must either edit the TFT_eSPI `User_Setup.h` 
 
 ### Continuous Integration (CI)
 
-This repository includes a GitHub Actions workflow (`.github/workflows/build.yml`) that automatically compiles the sketch on every push and **produces ready‑to‑flash firmware binaries** as workflow artifacts.
+This repository includes two GitHub Actions workflows:
 
+#### 1. Build on every push (`.github/workflows/build.yml`)
+- Runs on every push to `main` and pull requests.
 - **View build status**: Click the **Actions** tab on GitHub.
 - **Download binaries**: In any successful run, go to the **Artifacts** section and download `firmware‑binaries.zip`. It contains:
   - `WorldMonitor_CYD‑firmware.bin` – main firmware
@@ -79,7 +81,20 @@ This repository includes a GitHub Actions workflow (`.github/workflows/build.yml
   - `WorldMonitor_CYD‑bootloader.bin` – bootloader (if needed)
   - `WorldMonitor_CYD.elf` – debug symbols
 
+#### 2. Create Release on tag push (`.github/workflows/release.yml`)
+- Runs when you push a tag starting with `v` (e.g., `v1.0.0`, `v2.1.0`).
+- **Creates a GitHub Release** with the tag name.
+- **Attaches the same firmware binaries** as release assets.
+- **Generates release notes** automatically.
+
 Use `esptool.py` or PlatformIO to flash these .bin files to your CYD.
+
+**To create a new release:**
+```bash
+git tag v1.0.0  # or whatever version
+git push origin v1.0.0
+```
+The workflow will build the firmware and create a release on GitHub.
 
 ## ⚙️ Configuration
 
