@@ -1,0 +1,15 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Ensure files with the following extensions are treated as text
+*.ino text
+*.h text
+*.cpp text
+*.c text
+*.md text
+*.txt text
+*.json text
+*.yml text
+*.yaml text
+*.xml text
+*.csv text

@@ -1,0 +1,83 @@
+# Compiled object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Arduino
+*.hex
+*.eep
+
+# PlatformIO
+.pio/
+.piolibdeps/
+.pioenvs/
+.pio/build/
+
+# Visual Studio Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+
+# Linux
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# ESP32 specific
+/sdkconfig
+/sdkconfig.old
+/partition_table/
+/flash_app_args
+/flash_project_args
+/CMakeLists.txt.user
+
+# Generated files
+*.bin
+*.partitions.bin
+*.map
