@@ -38,7 +38,9 @@ This is a complete port of the **WorldMonitor Desktop Companion** to the ESP32 C
 1. **Install Arduino IDE** or PlatformIO.
 2. **Add ESP32 board support** via Boards Manager.
 3. **Install libraries**: TFT_eSPI, ArduinoJson.
-4. **Configure TFT_eSPI** for CYD (edit `User_Setup.h`):
+4. **Configure TFT_eSPI** for CYD:
+   - The `src/setup.h` file already contains the correct pin definitions for CYD. If touch works, you’re done.
+   - If touch doesn’t respond, edit the TFT_eSPI library’s `User_Setup.h` (in `Arduino/libraries/TFT_eSPI/`) and make sure these lines are present:
    ```cpp
    #define ILI9341_DRIVER
    #define TFT_WIDTH  320
@@ -62,7 +64,9 @@ If you prefer PlatformIO (VS Code):
 4. Connect your CYD via USB.
 5. Click **Upload** in the PlatformIO toolbar.
 
-PlatformIO will automatically download TFT_eSPI and ArduinoJson. You still need to edit the TFT_eSPI `User_Setup.h` as described above.
+PlatformIO will automatically download TFT_eSPI and ArduinoJson. The `platformio.ini` file already sets the correct pin definitions for CYD, so you don’t need to edit the library configuration.
+
+If you’re using Arduino IDE, you must either edit the TFT_eSPI `User_Setup.h` or rely on the provided `src/setup.h` file (see the Quick Start section).
 
 ### Continuous Integration (CI)
 

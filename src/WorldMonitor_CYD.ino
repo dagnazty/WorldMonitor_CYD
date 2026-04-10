@@ -18,6 +18,7 @@
 #include <ArduinoJson.h>
 #include <SPI.h>
 #include <SD.h>
+#include "setup.h"
 #include <TFT_eSPI.h>
 #include <Preferences.h>
 
@@ -504,11 +505,11 @@ bool loadConfigSD(Config& cfg) {
   if (doc["api_key"])        strlcpy(cfg.apiKey,       doc["api_key"],       sizeof(cfg.apiKey));
   if (doc["api_base_url"])   strlcpy(cfg.apiBaseURL,   doc["api_base_url"],  sizeof(cfg.apiBaseURL));
   if (doc["ui_mode"])        strlcpy(cfg.uiMode,       doc["ui_mode"],       sizeof(cfg.uiMode));
-  if (doc.containsKey("buzzer"))          cfg.buzzerEnabled  = doc["buzzer"];
-  if (doc.containsKey("brightness"))      cfg.brightness     = doc["brightness"];
-  if (doc.containsKey("refresh_seconds")) cfg.refreshSeconds = doc["refresh_seconds"];
-  if (doc.containsKey("screen_timeout"))  cfg.screenTimeout  = doc["screen_timeout"];
-  if (doc.containsKey("auto_advance_seconds")) cfg.autoAdvanceSeconds = doc["auto_advance_seconds"];
+  if (doc["buzzer"].is<bool>())          cfg.buzzerEnabled  = doc["buzzer"];
+  if (doc["brightness"].is<int>())      cfg.brightness     = doc["brightness"];
+  if (doc["refresh_seconds"].is<int>()) cfg.refreshSeconds = doc["refresh_seconds"];
+  if (doc["screen_timeout"].is<int>())  cfg.screenTimeout  = doc["screen_timeout"];
+  if (doc["auto_advance_seconds"].is<int>()) cfg.autoAdvanceSeconds = doc["auto_advance_seconds"];
   
   Serial.println(F("Config loaded from SD"));
   return true;
