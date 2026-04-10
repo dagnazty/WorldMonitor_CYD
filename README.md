@@ -1,5 +1,7 @@
 # 🌍 WorldMonitor CYD Edition
 
+![PlatformIO CI](https://github.com/your-username/WorldMonitor_CYD/actions/workflows/build.yml/badge.svg)
+
 **A touch‑screen global dashboard on a $15 ESP32 display.**
 
 This is a complete port of the **WorldMonitor Desktop Companion** to the ESP32 Cheap Yellow Display (CYD) — a 2.8" touchscreen that shows live markets, earthquakes, natural events, and risk scores. No joystick, no SD card, no extra hardware. Just the CYD and a USB cable.
@@ -61,6 +63,12 @@ If you prefer PlatformIO (VS Code):
 5. Click **Upload** in the PlatformIO toolbar.
 
 PlatformIO will automatically download TFT_eSPI and ArduinoJson. You still need to edit the TFT_eSPI `User_Setup.h` as described above.
+
+**Note**: The project uses `src_dir = .` in `platformio.ini` (source files are in the root folder, not a `src/` subdirectory). This is intentional.
+
+### Continuous Integration (CI)
+
+This repository includes a GitHub Actions workflow (`.github/workflows/build.yml`) that automatically compiles the sketch on every push to verify it builds without errors. You can view the **Actions** tab on GitHub to see build status.
 
 ## ⚙️ Configuration
 
@@ -163,3 +171,9 @@ git push -u origin main
 ```
 
 All necessary GitHub files (`.gitignore`, `.gitattributes`, `LICENSE`) are already included.
+
+After pushing, update the badge URL in `README.md`:
+```markdown
+![PlatformIO CI](https://github.com/your-username/your-repo/actions/workflows/build.yml/badge.svg)
+```
+Replace `your-username/your-repo` with your actual GitHub repository path.

@@ -23,8 +23,8 @@ jobs:
         run: pip install --upgrade platformio
 
       - name: Build
-        run: pio run
+        run: pio run -e esp32dev
 
       - name: Check for compilation warnings
         run: |
-          pio run 2>&1 | grep -i "warning" && exit 1 || exit 0
+          pio run -e esp32dev 2>&1 | grep -i "warning" && exit 1 || exit 0
