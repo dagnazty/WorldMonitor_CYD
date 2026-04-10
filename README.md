@@ -70,7 +70,16 @@ If you’re using Arduino IDE, you must either edit the TFT_eSPI `User_Setup.h` 
 
 ### Continuous Integration (CI)
 
-This repository includes a GitHub Actions workflow (`.github/workflows/build.yml`) that automatically compiles the sketch on every push to verify it builds without errors. You can view the **Actions** tab on GitHub to see build status.
+This repository includes a GitHub Actions workflow (`.github/workflows/build.yml`) that automatically compiles the sketch on every push and **produces ready‑to‑flash firmware binaries** as workflow artifacts.
+
+- **View build status**: Click the **Actions** tab on GitHub.
+- **Download binaries**: In any successful run, go to the **Artifacts** section and download `firmware‑binaries.zip`. It contains:
+  - `WorldMonitor_CYD‑firmware.bin` – main firmware
+  - `WorldMonitor_CYD‑partitions.bin` – partition table
+  - `WorldMonitor_CYD‑bootloader.bin` – bootloader (if needed)
+  - `WorldMonitor_CYD.elf` – debug symbols
+
+Use `esptool.py` or PlatformIO to flash these .bin files to your CYD.
 
 ## ⚙️ Configuration
 

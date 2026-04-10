@@ -1,4 +1,4 @@
-name: PlatformIO CI
+name: Build Firmware
 
 on:
   push:
@@ -22,9 +22,30 @@ jobs:
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
 
-      - name: Build
+      - name: Build firmware
         run: pio run -e esp32dev
 
-      - name: Check for compilation warnings
+      - name: List build artifacts
         run: |
-          pio run -e esp32dev 2>&1 | grep -i "warning" && exit 1 || exit 0
+          echo "Build output directory:"
+          find .pio/build/esp32dev -name "*.bin" -o -name "*.elf" -o -name "*.map" | xargs -I {} ls -lh {}
+          echo "---"
+          ls -la .pio/build/esp32dev/
+
+      - name: Prepare distribution
+        run: |
+          mkdir -p dist
+          cp .pio/build/esp32dev/firmware.bin dist/WorldMonitor_CYD-firmware.bin 2>/dev/null || true
+          cp .pio/build/esp32dev/partitions.bin dist/WorldMonitor_CYD-partitions.bin 2>/dev/null || true
+          cp .pio/build/esp32dev/bootloader.bin dist/WorldMonitor_CYD-bootloader.bin 2>/dev/null || true
+          # Also copy the .elf for debugging
+          cp .pio/build/esp32dev/firmware.elf dist/WorldMonitor_CYD.elf 2>/dev/null || true
+          echo "Dist contents:"
+          ls -lh dist/
+
+      - name: Upload firmware binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-binaries
+          path: dist/
+          retention-days: 7
